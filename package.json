@@ -1,0 +1,31 @@
+{
+  "name": "fonoa-multi-system-router",
+  "version": "1.0.0",
+  "description": "Multi-system routing Lambda for Fonoa webhooks - Routes transactions to NetSuite, OPSI, and DARTS based on entity and transaction type",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fonoa",
+    "netsuite",
+    "opsi",
+    "darts",
+    "webhook",
+    "routing",
+    "lambda"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.600.0",
+    "@aws-sdk/client-secrets-manager": "^3.600.0",
+    "@aws-sdk/client-sesv2": "^3.600.0",
+    "@aws-sdk/lib-dynamodb": "^3.600.0",
+    "axios": "^1.6.0",
+    "jose": "^5.0.0",
+    "oauth-1.0a": "^2.2.6"
+  },
+  "devDependencies": {}
+}
