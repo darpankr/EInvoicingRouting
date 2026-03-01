@@ -52,8 +52,8 @@ export async function forwardToOPSI(payload, supplierId) {
             
             if (supplierId === "87af90f7cba711f08ff93aed354798f0") {
                 // Supplier 1: Use credentials with _1 suffix
-                opsiUrl = secrets.DARTS_URL_1;
-                opsiApiKey = secrets.DARTS_API_KEY_1;
+                opsiUrl = secrets.OPSI_URL_1;
+                opsiApiKey = secrets.OPSI_API_KEY_1;
                 
                 console.log("Routing to DARTS Environment 1 (DEV)");
                 

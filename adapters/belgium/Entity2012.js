@@ -28,7 +28,7 @@ export async function handleRoute(payload, webhookBody, trType) {
 
         case 'AR':
             console.log("[Entity 2012] Routing AR transaction to OPSI");
-            return await forwardToOPSI(payload. supplierId);
+            return await forwardToOPSI(payload, supplierId);
 
         default:
             throw new Error(

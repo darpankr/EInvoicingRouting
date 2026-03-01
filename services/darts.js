@@ -52,19 +52,19 @@ export async function forwardToDARTS(payload, supplierId) {
             
             if (supplierId === "84a8c39ab98211f0b89662776c1e4c7a") {
                 // Supplier 1: Use credentials with _1 suffix
-                // dartsUrl = secrets.OPSI_URL_1;
-                // dartsApiKey = secrets.OPSI_API_KEY_1;
-                dartsUrl = process.env.OPSI_URL_1;
-                dartsApiKey = process.env.OPSI_API_KEY_1;
+                // dartsUrl = secrets.DARTS_URL_1;
+                // dartsApiKey = secrets.DARTS_API_KEY_1;
+                dartsUrl = process.env.DARTS_URL_1;
+                dartsApiKey = process.env.DARTS_API_KEY_1;
                 
                 console.log("Routing to DARTS Environment 1 (DEV)");
                 
             } else if (supplierId === "0a484185f6d411f0a79bf21900fea8d9") {
                 // Supplier 2: Use credentials with _2 suffix
-                // opsiUrl = secrets.OPSI_URL_2;
-                // dartsApiKey = secrets.OPSI_API_KEY_2;
-                opsiUrl = process.env.OPSI_URL_2;
-                dartsApiKey = process.env.OPSI_API_KEY_2;
+                // opsiUrl = secrets.DARTS_URL_2;
+                // dartsApiKey = secrets.DARTS_API_KEY_2;
+                opsiUrl = process.env.DARTS_URL_2;
+                dartsApiKey = process.env.DARTS_API_KEY_2;
                 
                 console.log("Routing to DARTS Environment 2 (TEST)");
                 
