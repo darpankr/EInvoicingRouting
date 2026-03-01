@@ -54,8 +54,8 @@ export async function forwardToDARTS(payload, supplierId) {
                 // Supplier 1: Use credentials with _1 suffix
                 // dartsUrl = secrets.OPSI_URL_1;
                 // dartsApiKey = secrets.OPSI_API_KEY_1;
-                dartsUrl = "https://testdev.darts-ip.com/darts-web/integration-api/fonoa-webhook";
-                dartsApiKey = "yr35GXBPLoZpLZAHtQbWnCeQVquokpNaxRNNJCk7tBQ=";
+                dartsUrl = process.env.OPSI_URL_1;
+                dartsApiKey = process.env.OPSI_API_KEY_1;
                 
                 console.log("Routing to DARTS Environment 1 (DEV)");
                 
@@ -63,8 +63,8 @@ export async function forwardToDARTS(payload, supplierId) {
                 // Supplier 2: Use credentials with _2 suffix
                 // opsiUrl = secrets.OPSI_URL_2;
                 // dartsApiKey = secrets.OPSI_API_KEY_2;
-                dartsUrl = "https://testmaster.darts-ip.com/darts-web/integration-api/fonoa-webhook";
-                dartsApiKey = "+s8ELy6lLSb+0i84bNLlZmAYkz83siXjACnrhoL8LB4=";
+                opsiUrl = process.env.OPSI_URL_2;
+                dartsApiKey = process.env.OPSI_API_KEY_2;
                 
                 console.log("Routing to DARTS Environment 2 (TEST)");
                 
