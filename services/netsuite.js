@@ -39,10 +39,6 @@ const oauth = new OAuth({
 // =========================================================================
 // EXTRACT SUPPLIER ID FROM PAYLOAD
 // =========================================================================
-function extractSupplierId(payload) {
-    return payload.supplier?.id
-        || null;
-}
 
 // =========================================================================
 // FORWARD TO NETSUITE
@@ -53,7 +49,7 @@ export async function forwardToNetSuite(payload, supplierId) {
     try {
         // Load NetSuite-specific secrets
         // const secrets = await loadNetSuiteSecrets();
-        const secretName = process.env.DARTS_SECRET_NAME;
+        const secretName = process.env.SECRET_NAME;
         const secrets = await loadSecret(secretName);  // ✅ Direct call
 
         // Get Lambda environment
@@ -106,7 +102,7 @@ export async function forwardToNetSuite(payload, supplierId) {
         if (!consumerKey || !restletUrl) {
             throw new Error(
                 `NetSuite Configuration Error: Missing credentials for ${environment} ` +
-                `${environment === "NON_PROD" ? `supplier ${extractSupplierId(payload)}` : ''}`
+                `${environment === "NON_PROD" ? `supplier ${supplierId}` : ''}`
             );
         }
 
