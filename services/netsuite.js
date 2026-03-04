@@ -1,12 +1,12 @@
 import axios from 'axios';
 import crypto from 'crypto';
 import OAuth from 'oauth-1.0a';
-import { loadSecret } from '../core/fonoa.js';
+import { loadSecret } from '../core/secrets.js';
 
 // =========================================================================
 // NETSUITE SECRETS CACHE
 // =========================================================================
-let NETSUITE_SECRETS = null;
+// let NETSUITE_SECRETS = null;
 
 // =========================================================================
 // OAUTH 1.0A CONFIGURATION
@@ -25,16 +25,16 @@ const oauth = new OAuth({
 // =========================================================================
 // LOAD NETSUITE SECRETS
 // =========================================================================
-async function loadNetSuiteSecrets() {
-    if (NETSUITE_SECRETS) {
-        console.log("Using cached NetSuite secrets");
-        return NETSUITE_SECRETS;
-    }
+// async function loadNetSuiteSecrets() {
+//     if (NETSUITE_SECRETS) {
+//         console.log("Using cached NetSuite secrets");
+//         return NETSUITE_SECRETS;
+//     }
 
-    const secretName = process.env.SECRET_NAME;
-    NETSUITE_SECRETS = await loadSecret(secretName);
-    return NETSUITE_SECRETS;
-}
+//     const secretName = process.env.SECRET_NAME;
+//     NETSUITE_SECRETS = await loadSecret(secretName);
+//     return NETSUITE_SECRETS;
+// }
 
 // =========================================================================
 // EXTRACT SUPPLIER ID FROM PAYLOAD
@@ -52,7 +52,9 @@ export async function forwardToNetSuite(payload, supplierId) {
 
     try {
         // Load NetSuite-specific secrets
-        const secrets = await loadNetSuiteSecrets();
+        // const secrets = await loadNetSuiteSecrets();
+        const secretName = process.env.DARTS_SECRET_NAME;
+        const secrets = await loadSecret(secretName);  // ✅ Direct call
 
         // Get Lambda environment
         const environment = process.env.ENVIRONMENT;

@@ -1,24 +1,24 @@
 import axios from 'axios';
-import { loadSecret } from '../core/fonoa.js';
+import { loadSecret } from '../core/secrets.js';
 
-// =========================================================================
-// DARTS SECRETS CACHE
-// =========================================================================
-let DARTS_SECRETS = null;
+// // =========================================================================
+// // DARTS SECRETS CACHE
+// // =========================================================================
+// let DARTS_SECRETS = null;
 
-// =========================================================================
-// LOAD DARTS SECRETS
-// =========================================================================
-async function loadDARTSSecrets() {
-    if (DARTS_SECRETS) {
-        console.log("Using cached DARTS secrets");
-        return DARTS_SECRETS;
-    }
+// // =========================================================================
+// // LOAD DARTS SECRETS
+// // =========================================================================
+// async function loadDARTSSecrets() {
+//     if (DARTS_SECRETS) {
+//         console.log("Using cached DARTS secrets");
+//         return DARTS_SECRETS;
+//     }
 
-    const secretName = process.env.DARTS_SECRET_NAME;
-    DARTS_SECRETS = await loadSecret(secretName);
-    return DARTS_SECRETS;
-}
+//     const secretName = process.env.DARTS_SECRET_NAME;
+//     DARTS_SECRETS = await loadSecret(secretName);
+//     return DARTS_SECRETS;
+// }
 
 
 
@@ -31,6 +31,8 @@ export async function forwardToDARTS(payload, supplierId) {
     try {
         // Load DARTS-specific secrets
         // const secrets = await loadDARTSSecrets();
+        const secretName = process.env.DARTS_SECRET_NAME;
+        const secrets = await loadSecret(secretName);  // ✅ Direct call
 
         // Get Lambda environment
         const environment = process.env.ENVIRONMENT;
@@ -54,17 +56,17 @@ export async function forwardToDARTS(payload, supplierId) {
                 // Supplier 1: Use credentials with _1 suffix
                 // dartsUrl = secrets.DARTS_URL_1;
                 // dartsApiKey = secrets.DARTS_API_KEY_1;
-                dartsUrl = process.env.DARTS_URL_1;
-                dartsApiKey = process.env.DARTS_API_KEY_1;
+                dartsUrl = secrets.DARTS_URL_1;
+                dartsApiKey = secrets.DARTS_API_KEY_1;
                 
                 console.log("Routing to DARTS Environment 1 (DEV)");
                 
             } else if (supplierId === "0a484185f6d411f0a79bf21900fea8d9") {
                 // Supplier 2: Use credentials with _2 suffix
-                // opsiUrl = secrets.DARTS_URL_2;
+                // dartsUrl = secrets.DARTS_URL_2;
                 // dartsApiKey = secrets.DARTS_API_KEY_2;
-                opsiUrl = process.env.DARTS_URL_2;
-                dartsApiKey = process.env.DARTS_API_KEY_2;
+                dartsUrl = secrets.DARTS_URL_2;
+                dartsApiKey = secrets.DARTS_API_KEY_2;
                 
                 console.log("Routing to DARTS Environment 2 (TEST)");
                 

@@ -1,25 +1,25 @@
 import axios from 'axios';
-import { loadSecret } from '../core/fonoa.js';
+import { loadSecret } from '../core/secrets.js';
 import { extractSupplierId } from '../core/utils.js';
 
 // =========================================================================
 // OPSI SECRETS CACHE
 // =========================================================================
-let OPSI_SECRETS = null;
+// let OPSI_SECRETS = null;
 
 // =========================================================================
 // LOAD OPSI SECRETS
 // =========================================================================
-async function loadOPSISecrets() {
-    if (OPSI_SECRETS) {
-        console.log("Using cached OPSI secrets");
-        return OPSI_SECRETS;
-    }
+// async function loadOPSISecrets() {
+//     if (OPSI_SECRETS) {
+//         console.log("Using cached OPSI secrets");
+//         return OPSI_SECRETS;
+//     }
 
-    const secretName = process.env.OPSI_SECRET_NAME;
-    OPSI_SECRETS = await loadSecret(secretName);
-    return OPSI_SECRETS;
-}
+//     const secretName = process.env.OPSI_SECRET_NAME;
+//     OPSI_SECRETS = await loadSecret(secretName);
+//     return OPSI_SECRETS;
+// }
 
 // `extractSupplierId` moved to `core/utils.js`
 
@@ -32,6 +32,8 @@ export async function forwardToOPSI(payload, supplierId) {
     try {
         // Load OPSI-specific secrets
         // const secrets = await loadOPSISecrets();
+        const secretName = process.env.OPSI_SECRET_NAME;
+        const secrets = await loadSecret(secretName);  // ✅ Direct call
 
         // Get Lambda environment
         const environment = process.env.ENVIRONMENT;
@@ -55,7 +57,7 @@ export async function forwardToOPSI(payload, supplierId) {
                 opsiUrl = secrets.OPSI_URL_1;
                 opsiApiKey = secrets.OPSI_API_KEY_1;
                 
-                console.log("Routing to DARTS Environment 1 (DEV)");
+                console.log("Routing to OPSI Environment 1 (DEV)");
                 
             }  else {
                 throw new Error(
