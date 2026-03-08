@@ -5,6 +5,7 @@ import * as Idempotency from './core/idempotency.js';
 import { sendErrorNotification } from './core/notifier.js';
 import { CountryRegistry } from './config/registry.js';
 import { fetchFonoaResource } from './core/fonoa.js';
+import { withTimeout, EXTERNAL_API_TIMEOUT } from './core/utils.js';
 
 // =========================================================================
 // AWS CLIENTS - Initialize outside handler for container reuse
@@ -94,7 +95,11 @@ export const handler = async (event) => {
         console.log("Fonoa webhook security validated successfully.");
 
         // 6. FETCH FULL RESOURCE DATA
-        const fullFonoaDetails = await fetchFonoaResource(resourceUrl);
+        const fullFonoaDetails = await withTimeout(
+            fetchFonoaResource(resourceUrl),
+            EXTERNAL_API_TIMEOUT,
+            'Fonoa resource fetch'
+        );
         console.log(`Successfully fetched resource: ${resourceId}`);
 
         // 7. DYNAMIC COUNTRY-BASED ROUTING
@@ -129,7 +134,11 @@ export const handler = async (event) => {
         }
 
         console.log(`Routing to country adapter: ${countryCode}`);
-        const response = await adapter.routeTransaction(fullFonoaDetails, body);
+        const response = await withTimeout(
+            adapter.routeTransaction(fullFonoaDetails),
+            EXTERNAL_API_TIMEOUT,
+            'Target system forward'
+        );
 
         // 8. VALIDATE TARGET SYSTEM RESPONSE
         if (response.data?.error || response.data?.status === 'FAILED' || response.data?.status === 'error') {

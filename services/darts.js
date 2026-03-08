@@ -93,6 +93,7 @@ export async function forwardToDARTS(payload, supplierId) {
         }
 
         console.log(`DARTS URL: ${dartsUrl}`);
+        console.log("Payload Sending: ", payload);
 
         // =========================================================================
         // MAKE REQUEST
