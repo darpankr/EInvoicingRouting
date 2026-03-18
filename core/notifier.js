@@ -19,7 +19,8 @@ export async function sendErrorNotification(
     environment,
     webhookId,
     statusCode = 200,
-    targetSystem = "System"
+    targetSystem = "System",
+    countryCode = null
 ) {
     const istTime = new Date().toLocaleString("en-IN", {
         timeZone: "Asia/Kolkata",
@@ -36,17 +37,17 @@ export async function sendErrorNotification(
     let resourceId = "N/A";
     let eventType = "N/A";
     let deliveredAt = "N/A";
-    let countryCode = "N/A";
 
     try {
         const parsed = JSON.parse(rawBody);
         resourceId = parsed.resource_id || "N/A";
         eventType = parsed.event_type || "N/A";
         deliveredAt = parsed.delivered_at || "N/A";
-        countryCode = parsed.country_code || "N/A";
     } catch (e) {
         console.error("Email Helper: Parse failed");
     }
+
+    const displayCountryCode = countryCode || "N/A";
 
     // Email styling
     const tableStyle = "width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 15px; font-family: 'Segoe UI', Arial, sans-serif;";
@@ -104,7 +105,7 @@ export async function sendErrorNotification(
                                         </tr>
                                         <tr>
                                             <td style="${labelStyle}">Country Code</td>
-                                            <td style="${valueStyle}">${countryCode}</td>
+                                            <td style="${valueStyle}">${displayCountryCode}</td>
                                         </tr>
                                         <tr>
                                             <td style="${labelStyle}">Event Type</td>

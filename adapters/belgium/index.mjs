@@ -83,7 +83,7 @@ export async function routeTransaction(payload, webhookBody) {
 
     // Validate entity number
     if (!entityNumber) {
-        throw new Error(`Routing Error: Could not determine entity number from payload`);
+        throw new Error(`Routing Error: Could not determine entity number from payload for direction - ${direction}`);
     }
 
     // Determine if this is an intercompany transaction

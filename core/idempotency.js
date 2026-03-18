@@ -119,7 +119,8 @@ export async function markFailed(
     environment,
     shouldRetry = false,
     trackInTable = true,
-    system = "System"
+    system = "System",
+    countryCode = null
 ) {
     // If we shouldn't track in table, just send email and return
     if (!trackInTable || webhookId === "UNKNOWN" || webhookId === "MISSING_ID" || !webhookId) {
@@ -134,7 +135,8 @@ export async function markFailed(
                 environment,
                 webhookId,
                 shouldRetry ? 500 : 200,
-                system
+                system,
+                countryCode
             );
         } catch (sesError) {
             console.error(`Critical: SES Failed to send alert: ${sesError.message}`);
@@ -185,7 +187,8 @@ export async function markFailed(
                     environment,
                     webhookId,
                     shouldRetry ? 500 : 200,
-                    system
+                    system,
+                    countryCode
                 );
 
                 // Mark email as sent

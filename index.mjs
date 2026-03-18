@@ -27,6 +27,7 @@ export const handler = async (event) => {
     let webhookId = "UNKNOWN";
     let resourceId = "UNKNOWN";
     let rawBody = "Could not parse event body";
+    let countryCode = null;
 
     try {
         // 1. PARSE REQUEST BODY
@@ -135,7 +136,7 @@ export const handler = async (event) => {
 
         console.log(`Routing to country adapter: ${countryCode}`);
         const response = await withTimeout(
-            adapter.routeTransaction(fullFonoaDetails),
+            adapter.routeTransaction(fullFonoaDetails, body),
             EXTERNAL_API_TIMEOUT,
             'Target system forward'
         );
@@ -237,15 +238,15 @@ export const handler = async (event) => {
             targetSystem = "NetSuite";
         }
         else if (detailedMsg.includes("OPSI API Error") || detailedMsg.includes("OPSI API Failure")) {
-            priority = "Low"; system = "OPSI"; category = "OPSI Integration Error"; subcategory = "OPSI API Failed"; trackInTable = true; shouldRetry = true;
+            priority = "Low"; system = "OPSI"; category = "OPSI Integration Error"; subcategory = "OPSI API Failed"; trackInTable = true; shouldRetry = false;
             targetSystem = "OPSI";
         }
         else if (detailedMsg.includes("DARTS API Error") || detailedMsg.includes("DARTS API Failure")) {
-            priority = "Low"; system = "DARTS"; category = "DARTS Integration Error"; subcategory = "DARTS API Failed"; trackInTable = true; shouldRetry = true;
+            priority = "Low"; system = "DARTS"; category = "DARTS Integration Error"; subcategory = "DARTS API Failed"; trackInTable = true; shouldRetry = false;
             targetSystem = "DARTS";
         }
         else if (detailedMsg.includes("Routing Error")) {
-            priority = "Low"; system = "Router"; category = "Routing Error"; subcategory = "Configuration Issue"; trackInTable = true; shouldRetry = true;
+            priority = "Low"; system = "Router"; category = "Routing Error"; subcategory = "Configuration Issue"; trackInTable = true; shouldRetry = false;
             targetSystem = "N/A";
         }
         else if (detailedMsg.includes("Integration Error") || detailedMsg.includes("Target system rejected")) {
@@ -270,7 +271,8 @@ export const handler = async (event) => {
             ENVIRONMENT,
             shouldRetry,
             trackInTable,
-            targetSystem  // Pass target system (will be "N/A" or actual system name)
+            targetSystem,  // Pass target system (will be "N/A" or actual system name)
+            countryCode
         );
 
         // Return appropriate status code

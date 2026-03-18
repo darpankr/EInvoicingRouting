@@ -22,6 +22,12 @@ A production-ready AWS Lambda application that intelligently routes Fonoa webhoo
 
 ## 📁 Project Structure
 
+fonoa-webhook/
+├── index.mjs                    # Main Lambda handler
+├── package.json
+├── README.md                    # Full documentation
+
+
 ```
 fonoa-multi-system-router/
 ├── index.mjs                    # Main Lambda handler
@@ -33,10 +39,11 @@ fonoa-multi-system-router/
 │
 ├── adapters/                    # Country routing logic
 │   └── belgium/
-│       ├── index.mjs           # Belgium orchestrator
-│       ├── Entity2012.js       # 0422317610 rules
-│       ├── Entity2045.js       # 0885436190 rules
-│       └── Entity2047.js       # 0885540417 rules
+│   |    ├── index.mjs           # Belgium orchestrator
+│   |    ├── Entity2012.js       # 0422317610 rules
+│   |    ├── Entity2045.js       # 0885436190 rules
+│   |    └── Entity2047.js       # 0885540417 rules
+|   |__ france/    
 │
 ├── services/                   # Target system clients
 │   ├── netsuite.js            # OAuth 1.0a client
