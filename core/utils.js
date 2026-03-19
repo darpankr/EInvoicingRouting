@@ -12,3 +12,12 @@ export const withTimeout = (promise, ms, operation) => {
 export function extractSupplierId(payload) {
     return payload?.supplier?.id ?? null;
 }
+
+
+export function safeToUpperCase(value) {
+    if (value == null) return null;              // null/undefined
+    if (typeof value !== 'string') return null;  // numbers, objects
+    const trimmed = value.trim();
+    if (trimmed === '') return null;             // empty/whitespace
+    return trimmed.toUpperCase();
+}

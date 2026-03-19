@@ -1,5 +1,6 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
+import { safeToUpperCase } from "../../core/utils.js";
 import * as Entity2012 from './Entity2012.js';
 import * as Entity2045 from './Entity2045.js';
 import * as Entity2047 from './Entity2047.js';
@@ -62,7 +63,7 @@ async function getIntercompanyList() {
 // MAIN ROUTING FUNCTION FOR BELGIUM
 // =========================================================================
 export async function routeTransaction(payload, webhookBody) {
-    const direction = payload.direction?.toUpperCase();
+    const direction = safeToUpperCase(payload.direction);
     const icList = await getIntercompanyList();
 
     let entityNumber;

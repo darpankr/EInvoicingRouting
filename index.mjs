@@ -2,10 +2,9 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { initializeJwks, verifyFonoaToken } from './core/security.js';
 import * as Idempotency from './core/idempotency.js';
-import { sendErrorNotification } from './core/notifier.js';
 import { CountryRegistry } from './config/registry.js';
 import { fetchFonoaResource } from './core/fonoa.js';
-import { withTimeout, EXTERNAL_API_TIMEOUT } from './core/utils.js';
+import { withTimeout, EXTERNAL_API_TIMEOUT, safeToUpperCase } from './core/utils.js';
 
 // =========================================================================
 // AWS CLIENTS - Initialize outside handler for container reuse
@@ -105,7 +104,7 @@ export const handler = async (event) => {
 
         // 7. DYNAMIC COUNTRY-BASED ROUTING
         // Extract country code with fallback logic based on direction
-        const direction = fullFonoaDetails.direction?.toUpperCase();
+        const direction = safeToUpperCase(fullFonoaDetails.direction);
 
         if (direction === 'RECEIVED') {
             // For RECEIVED: Try customer fields
