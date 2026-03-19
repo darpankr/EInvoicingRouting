@@ -1,26 +1,6 @@
 import axios from 'axios';
 import { loadSecret } from '../core/secrets.js';
 
-// // =========================================================================
-// // DARTS SECRETS CACHE
-// // =========================================================================
-// let DARTS_SECRETS = null;
-
-// // =========================================================================
-// // LOAD DARTS SECRETS
-// // =========================================================================
-// async function loadDARTSSecrets() {
-//     if (DARTS_SECRETS) {
-//         console.log("Using cached DARTS secrets");
-//         return DARTS_SECRETS;
-//     }
-
-//     const secretName = process.env.DARTS_SECRET_NAME;
-//     DARTS_SECRETS = await loadSecret(secretName);
-//     return DARTS_SECRETS;
-// }
-
-
 
 // =========================================================================
 // FORWARD TO DARTS

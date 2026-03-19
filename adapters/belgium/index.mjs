@@ -71,12 +71,23 @@ export async function routeTransaction(payload, webhookBody) {
     // Determine entity and counterparty based on direction
     if (direction === 'RECEIVED') {
         // AP Transaction: We are the customer receiving the invoice
-        entityNumber = payload.customer?.entity_number;
-        counterpartyEntityNumber = String(payload.supplier?.entity_number || '');
+        entityNumber = payload.customer?.entity_number
+                    || payload.customer?.tax_information?.tax_number
+                    || '';
+        counterpartyEntityNumber = String(payload.supplier?.entity_number
+                                || payload.supplier?.tax_information?.tax_number
+                                || ''
+
+        );
     } else if (direction === 'SENT') {
         // AR Transaction: We are the supplier sending the invoice
-        entityNumber = payload.supplier?.entity_number;
-        counterpartyEntityNumber = String(payload.customer?.entity_number || '');
+        entityNumber = payload.supplier?.entity_number
+                    || payload.supplier?.tax_information?.tax_number
+                    || '';
+        counterpartyEntityNumber = String(payload.customer?.entity_number
+                                || payload.customer?.tax_information?.tax_number
+                                || ''
+        );
     } else {
         throw new Error(`Routing Error: Invalid direction '${direction}'. Expected 'RECEIVED' or 'SENT'`);
     }
@@ -102,11 +113,11 @@ export async function routeTransaction(payload, webhookBody) {
     // Map entity numbers to their handlers
     const handlers = {
         '0422317610': Entity2012.handleRoute,  // Entity 2012
-        '2012': Entity2012.handleRoute,         // Alternative format
+        'BE0422317610': Entity2012.handleRoute,         // Alternative format
         '0885436190': Entity2045.handleRoute,  // Entity 2045
-        '2045': Entity2045.handleRoute,         // Alternative format
+        'BE0885436190': Entity2045.handleRoute,         // Alternative format
         '0885540417': Entity2047.handleRoute,  // Entity 2047
-        '2047': Entity2047.handleRoute          // Alternative format
+        'BE0885540417': Entity2047.handleRoute          // Alternative format
     };
 
     const targetHandler = handlers[String(entityNumber)];

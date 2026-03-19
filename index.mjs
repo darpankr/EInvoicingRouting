@@ -106,24 +106,21 @@ export const handler = async (event) => {
         // 7. DYNAMIC COUNTRY-BASED ROUTING
         // Extract country code with fallback logic based on direction
         const direction = fullFonoaDetails.direction?.toUpperCase();
-        let countryCode = null;
 
         if (direction === 'RECEIVED') {
             // For RECEIVED: Try customer fields
             countryCode = fullFonoaDetails.customer?.address?.country_code?.toUpperCase()
-                       || fullFonoaDetails.customer?.country_code?.toUpperCase();
+                       || fullFonoaDetails.customer?.country_code?.toUpperCase()
+                       || null;
         } else if (direction === 'SENT') {
             // For SENT: Try top-level, then supplier fields
             countryCode = fullFonoaDetails.country_code?.toUpperCase()
                        || fullFonoaDetails.supplier?.address?.country_code?.toUpperCase()
-                       || fullFonoaDetails.supplier?.country_code?.toUpperCase();
+                       || fullFonoaDetails.supplier?.country_code?.toUpperCase()
+                       || null;
         } else {
             // Fallback: Try all possible fields
-            countryCode = fullFonoaDetails.country_code?.toUpperCase()
-                       || fullFonoaDetails.customer?.address?.country_code?.toUpperCase()
-                       || fullFonoaDetails.customer?.country_code?.toUpperCase()
-                       || fullFonoaDetails.supplier?.address?.country_code?.toUpperCase()
-                       || fullFonoaDetails.supplier?.country_code?.toUpperCase();
+            countryCode = null;
         }
 
         console.log(`Direction: ${direction}, Country Code: ${countryCode}`);
