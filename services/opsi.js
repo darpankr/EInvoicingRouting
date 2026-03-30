@@ -32,7 +32,7 @@ export async function forwardToOPSI(payload, supplierId) {
     try {
         // Load OPSI-specific secrets
         // const secrets = await loadOPSISecrets();
-        const secretName = process.env.OPSI_SECRET_NAME;
+        const secretName = process.env.SECRET_NAME_OPSI;
         const secrets = await loadSecret(secretName);  // ✅ Direct call
 
         // Get Lambda environment
@@ -54,8 +54,8 @@ export async function forwardToOPSI(payload, supplierId) {
             
             if (supplierId === "87af90f7cba711f08ff93aed354798f0") {
                 // Supplier 1: Use credentials with _1 suffix
-                opsiUrl = secrets.OPSI_URL_1;
-                opsiApiKey = secrets.OPSI_API_KEY_1;
+                opsiUrl = secrets.OPSI_URL_DEV1;
+                opsiApiKey = secrets.OPSI_API_KEY_DEV1;
                 
                 console.log("Routing to OPSI Environment 1 (DEV)");
                 

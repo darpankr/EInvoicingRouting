@@ -11,7 +11,7 @@ export async function forwardToDARTS(payload, supplierId) {
     try {
         // Load DARTS-specific secrets
         // const secrets = await loadDARTSSecrets();
-        const secretName = process.env.DARTS_SECRET_NAME;
+        const secretName = process.env.SECRET_NAME_DARTS;
         const secrets = await loadSecret(secretName);  // ✅ Direct call
 
         // Get Lambda environment
@@ -32,21 +32,21 @@ export async function forwardToDARTS(payload, supplierId) {
         } else if (environment === "NON-PROD") {
             // NON_PROD: Determine credentials based on supplier_id
             
-            if (supplierId === "84a8c39ab98211f0b89662776c1e4c7a") {
+            if (supplierId === "433c3a1c1ecf11f1b067ae935c12bc98") {
                 // Supplier 1: Use credentials with _1 suffix
                 // dartsUrl = secrets.DARTS_URL_1;
                 // dartsApiKey = secrets.DARTS_API_KEY_1;
-                dartsUrl = secrets.DARTS_URL_1;
-                dartsApiKey = secrets.DARTS_API_KEY_1;
+                dartsUrl = secrets.DARTS_URL_TESTDEV;
+                dartsApiKey = secrets.DARTS_API_KEY_TESTDEV;
                 
                 console.log("Routing to DARTS Environment 1 (DEV)");
                 
-            } else if (supplierId === "0a484185f6d411f0a79bf21900fea8d9") {
+            } else if (supplierId === "8255ef751ed211f1809542a7be496527") {
                 // Supplier 2: Use credentials with _2 suffix
                 // dartsUrl = secrets.DARTS_URL_2;
                 // dartsApiKey = secrets.DARTS_API_KEY_2;
-                dartsUrl = secrets.DARTS_URL_2;
-                dartsApiKey = secrets.DARTS_API_KEY_2;
+                dartsUrl = secrets.DARTS_URL_TESTMASTER;
+                dartsApiKey = secrets.DARTS_API_KEY_TESTMASTER;
                 
                 console.log("Routing to DARTS Environment 2 (TEST)");
                 

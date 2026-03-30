@@ -31,7 +31,7 @@ export async function handleRoute(payload, webhookBody, trType) {
 
         case 'IC-AR':
             console.log("[Entity 2047] Routing IC-AR transaction to NetSuite");
-            return await forwardToNetSuite(payload, supplierId);
+            return await forwardToNetSuite(payload, "ICAR201220452047"); //UPDATED - MARCH 26
 
         default:
             throw new Error(

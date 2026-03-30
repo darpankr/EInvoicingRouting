@@ -51,7 +51,7 @@ async function loadFonoaSecrets() {
     }
 
     // const secretName = process.env.FONOA_SECRET_NAME || 'fonoa-secrets';
-    const secretName = process.env.SECRET_NAME || 'fonoa-secrets';
+    const secretName = process.env.SECRET_NAME_FONOA || 'fonoa-secrets';
     SECRETS_CACHE.FONOA = await loadSecret(secretName);
     return SECRETS_CACHE.FONOA;
 }

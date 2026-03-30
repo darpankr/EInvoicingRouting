@@ -20,12 +20,16 @@ export async function handleRoute(payload, webhookBody, trType) {
         case 'AP':
             console.log("[Entity 2045] Routing AP transaction to NetSuite");
             return await forwardToNetSuite(payload, "AP201220452047");
+        
+        case 'IC-AR':
+            console.log("[Entity 2045] Routing IC-AR transaction to NetSuite");
+            return await forwardToNetSuite(payload, "ICAR201220452047"); //UPDATED - MARCH 26
 
         default:
             throw new Error(
                 `Entity 2045 Logic Error: Unsupported transaction type '${trType}'. ` +
-                `Currently only 'AP' transactions are supported for this entity. ` +
-                `If you need to add AR/IC-AR support, update this handler.`
+                `Currently only 'AP' and 'IC-AR' transactions are supported for this entity. ` +
+                `If you need to add 'AR' support, update this handler.`
             );
     }
 }

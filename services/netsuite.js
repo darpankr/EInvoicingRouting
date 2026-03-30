@@ -49,7 +49,7 @@ export async function forwardToNetSuite(payload, supplierId) {
     try {
         // Load NetSuite-specific secrets
         // const secrets = await loadNetSuiteSecrets();
-        const secretName = process.env.SECRET_NAME;
+        const secretName = process.env.SECRET_NAME_NETSUITE;
         const secrets = await loadSecret(secretName);  // ✅ Direct call
 
         // Get Lambda environment
@@ -73,7 +73,7 @@ export async function forwardToNetSuite(payload, supplierId) {
             
         } else if (environment === "NON-PROD") {
             
-            if (supplierId === "87af90f7cba711f08ff93aed354798f0" || supplierId === "AP201220452047") {
+            if (supplierId === "87af90f7cba711f08ff93aed354798f0" || supplierId === "AP201220452047" || supplierId === "ICAR201220452047") {
                 // Supplier 1: Use credentials with _1 suffix
                 consumerKey = secrets.NS_CONSUMER_KEY;
                 consumerSecret = secrets.NS_CONSUMER_SECRET;
